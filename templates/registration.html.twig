@@ -1,0 +1,27 @@
+{% extends 'card.html.twig' %}
+
+{% block header_title %}
+    <h1 class="font-black text-3xl md:text-3xl text-center tracking-wider">Inscription</h1>
+{% endblock %}
+
+{% block card %}
+    <form method="post">
+        {{ form_widget(form.lastname) }}
+        {{ form_widget(form.firstname) }}
+        {{ form_widget(form.email) }}
+        {{ form_widget(form.password) }}
+
+        <div class="hidden">
+            {{ form_widget(form._csrf) }}
+        </div>
+
+        <button type="submit" class="bg-blue-900 hover:bg-blue-800 w-full py-4 shadow-lg text-center font-bold rounded">
+            S'inscrire
+        </button>
+    </form>
+{% endblock %}
+
+{% block title %}
+    Inscription
+{% endblock %}
+

@@ -25,3 +25,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Repository\RepositoryInterface\UserRepository:
+        alias: App\Repository\Doctrine\DoctrineUserRepository
+
+    user_repository_decorator:
+        class: App\Decorator\Repository\DecoratorUserRepository
+        decorates: App\Repository\RepositoryInterface\UserRepository
+        arguments: ['@user_repository_decorator.inner']
