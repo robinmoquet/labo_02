@@ -7,7 +7,7 @@ namespace App\Event;
 use App\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class UserSaved extends Event
+class UserSavedEvent extends Event
 {
 
     public const NAME = 'user.saved';

@@ -5,9 +5,9 @@ namespace App\Decorator\Repository;
 
 
 use App\Entity\User;
-use App\Event\UserSaved;
+use App\Event\UserSavedEvent;
 use App\Repository\RepositoryInterface\UserRepository;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class DecoratorUserRepository implements UserRepository
 {
@@ -17,20 +17,20 @@ class DecoratorUserRepository implements UserRepository
      */
     private $repository;
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $dispatcher;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepository $repository, EventDispatcherInterface $eventDispatcher)
     {
         $this->repository = $repository;
-        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher = $eventDispatcher;
     }
 
     public function add(User $user): void
     {
         $this->repository->add($user);
-        $this->dispatcher->dispatch(new UserSaved($user), UserSaved::NAME);
+        $this->dispatcher->dispatch(new UserSavedEvent($user), UserSavedEvent::NAME);
     }
 
 }

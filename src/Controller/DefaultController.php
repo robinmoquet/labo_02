@@ -29,7 +29,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/registration", name="registration")
      * @param Request $request
-     * @param UserRepository $repository
+     * @param UserRepository $repository Repository qui est Decorate par App\Decorator\Repository\DecoratorUserRepository
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
      */
@@ -43,7 +43,7 @@ class DefaultController extends AbstractController
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
 
             $repository->add($user);
-            //return $this->redirectToRoute("login");
+            return $this->redirectToRoute("login");
         }
 
         return $this->render("registration.html.twig", [
