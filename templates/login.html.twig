@@ -1,10 +1,36 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-Connexion
-{% endblock %}
+{% extends 'card.html.twig' %}
 
 {% block title %}
  Connexion
 {% endblock %}
+
+{% block header_title %}
+ <h1 class="font-black text-3xl md:text-3xl text-center tracking-wider">Se connecter</h1>
+{% endblock %}
+
+{% block card %}
+ <form method="post">
+
+     {% if errors is not null %}
+        {{ errors.message }}
+     {% endif %}
+
+     <div class="mb-8">
+         <label for="_username" class="block text-gray-400 font-semibold text-lg uppercase mt-4">Email :</label>
+         <input id="_username" name="_username" type="text" autocomplete="off" placeholder="john-doe@email.com" value="{{ last_username }}"
+                class="shadow-inner block outline-none w-full mt-1 h-8 bg-gray-900 border-gray-800 border-4 rounded mt-2 p-6 text-gray-600 text-xl">
+     </div>
+     <div class="mb-8">
+         <label for="_password" class="block text-gray-400 font-semibold text-lg uppercase mt-4">Votre mot de passe :</label>
+         <input id="_password" name="_password" type="password" autocomplete="off" placeholder="********"
+                class="shadow-inner block outline-none w-full mt-1 h-8 bg-gray-900 border-gray-800 border-4 rounded mt-2 p-6 text-gray-600 text-xl">
+     </div>
+
+     <button type="submit" class="bg-blue-900 hover:bg-blue-800 w-full py-4 shadow-lg text-center font-bold rounded">
+         Se connecter
+     </button>
+ </form>
+
+{% endblock %}
+
 

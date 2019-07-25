@@ -27,10 +27,32 @@ class DecoratorUserRepository implements UserRepository
         $this->dispatcher = $eventDispatcher;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Appel la fonction add du repository pour ajouter l'utilisateur en base
+     * de donnée puis dispatch un evenement UserSavedEvent pour notifier les Subscriber
+     * que l'ajout d'un utilisateur a eu lieu
+     */
     public function add(User $user): void
     {
         $this->repository->add($user);
         $this->dispatcher->dispatch(new UserSavedEvent($user), UserSavedEvent::NAME);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getBy(array $params): array
+    {
+        return $this->repository->getBy($params);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getByEmail(string $email): ?User
+    {
+        return $this->repository->getByEmail($email);
+    }
 }

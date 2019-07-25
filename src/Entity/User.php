@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\RepositoryInterface\UserRepository")
  */
 class User implements UserInterface
 {
@@ -42,6 +43,20 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $firstname;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\StatsUser", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $statsUser;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
+
+    public function __construct(?UserPasswordEncoderInterface $passwordEncoder = null)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
 
     public function getId(): ?int
     {
@@ -99,7 +114,11 @@ class User implements UserInterface
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        if($this->passwordEncoder === null) {
+            $this->password = $password;
+        } else {
+            $this->password = $this->passwordEncoder->encodePassword($this, $password);
+        }
 
         return $this;
     }
@@ -141,6 +160,23 @@ class User implements UserInterface
     public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getStatsUser(): ?StatsUser
+    {
+        return $this->statsUser;
+    }
+
+    public function setStatsUser(StatsUser $statsUser): self
+    {
+        $this->statsUser = $statsUser;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $statsUser->getUser()) {
+            $statsUser->setUser($this);
+        }
 
         return $this;
     }

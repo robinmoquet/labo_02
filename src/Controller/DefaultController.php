@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use App\Repository\RepositoryInterface\UserRepository;
+use App\Service\Mailer\Mailer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,11 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * Route qui gere l'inscription d'un utilisateur
+     * L'action principale est de sauvegarder l'utilisateur, on passe par le UserRepository
+     * Les actions secondaires sont geres a l'issue de l'event UserSavedEvent, qui est dispatcher
+     * par le decorateur DecoratorUserRepository
+     *
      * @Route("/registration", name="registration")
      * @param Request $request
      * @param UserRepository $repository Repository qui est Decorate par App\Decorator\Repository\DecoratorUserRepository
@@ -35,13 +41,11 @@ class DefaultController extends AbstractController
      */
     public function registration(Request $request, UserRepository $repository, UserPasswordEncoderInterface $encoder): Response
     {
-        $user = new User();
+        $user = new User($encoder);
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-
             $repository->add($user);
             return $this->redirectToRoute("login");
         }
@@ -51,12 +55,5 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/profile", name="profile")
-     */
-    public function profile()
-    {
-        return $this->render("profile.html.twig");
-    }
 
 }

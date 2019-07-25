@@ -19,9 +19,28 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
         $this->manager = $registry->getManager();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function add(User $user): void
     {
         $this->manager->persist($user);
         $this->manager->flush();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBy(array $params): array
+    {
+        return $this->findBy($params);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getByEmail(string $email): ?User
+    {
+        return $this->findOneBy(["email" => $email]);
     }
 }
