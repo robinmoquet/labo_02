@@ -53,6 +53,11 @@ class StatsUser
     private $attempt;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $blockedAt;
+
+    /**
      * Le nombre de tentative de connection avant
      * que le compte soit bloqué pendant un certain temps
      */
@@ -143,6 +148,18 @@ class StatsUser
     public function setAttempt(?int $attempt): self
     {
         $this->attempt = $attempt;
+
+        return $this;
+    }
+
+    public function getBlockedAt(): ?\DateTimeInterface
+    {
+        return $this->blockedAt;
+    }
+
+    public function setBlockedAt(?\DateTimeInterface $blockedAt): self
+    {
+        $this->blockedAt = $blockedAt;
 
         return $this;
     }

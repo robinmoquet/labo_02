@@ -52,11 +52,13 @@ class SendEmailWhenUserIsSaved implements EventSubscriberInterface
         $user = $event->getUser();
 
         $email = $this->mailer->createEmail();
-        $email
-            ->subject('Merci pour votre inscription au Labo_02 !')
-            ->to($user->getEmail())
-            ->renderView("emails/welcome.mjml.twig", ['user' => $user]);
+        try {
+            $email
+                ->subject('Merci pour votre inscription au Labo_02 !')
+                ->to($user->getEmail())
+                ->renderView("emails/welcome.mjml.twig", ['user' => $user]);
 
-        $this->mailer->send($email);
+            $this->mailer->send($email);
+        } catch (\Error $e) {  }
     }
 }

@@ -13,6 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\AuthenticationEvents;
 use Symfony\Component\Security\Core\Event\AuthenticationFailureEvent;
 use Symfony\Component\Security\Core\Event\AuthenticationSuccessEvent;
+use Symfony\Component\Validator\Constraints\Date;
 
 class UpdateStatsOnAuthentication implements EventSubscriberInterface
 {
@@ -99,7 +100,12 @@ class UpdateStatsOnAuthentication implements EventSubscriberInterface
             $stats->setAttempt($attempt);
 
             if($attempt >= $stats::NB_ATTEMPT_AUTH) {
-                $stats->setBlocked(true);
+                try {
+                    $stats
+                        ->setBlockedAt(new \DateTime("now"))
+                        ->setBlocked(true);
+                } catch (\Exception $e) {  }
+
                 $this->dispatcher->dispatch(new UserBlockedEvent($user), UserBlockedEvent::NAME);
             }
 

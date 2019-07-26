@@ -44,12 +44,15 @@ class SendEmailOnAuthentication implements EventSubscriberInterface
 
         if($user instanceof User) {
             $email = $this->mailer->createEmail();
-            $email
-                ->subject("Une connection à eu lieu")
-                ->to($user->getEmail())
-                ->renderView("emails/connection.mjml.twig", ['user' => $user]);
+            try {
+                $email
+                    ->subject("Une connection à eu lieu")
+                    ->to($user->getEmail())
+                    ->renderView("emails/connection.mjml.twig", ['user' => $user]);
 
-            $this->mailer->send($email);
+                $this->mailer->send($email);
+            } catch (\Error $e) {  }
+
         }
     }
 }

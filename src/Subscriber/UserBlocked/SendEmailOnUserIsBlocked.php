@@ -36,11 +36,14 @@ class SendEmailOnUserIsBlocked implements EventSubscriberInterface
         $user = $event->getUser();
 
         $email = $this->mailer->createEmail();
-        $email
-            ->subject("Compte bloqué")
-            ->to($user->getEmail())
-            ->renderView("emails/compte-blocked.mjml.twig", ["user" => $user]);
+        try {
+            $email
+                ->subject("Compte bloqué")
+                ->to($user->getEmail())
+                ->renderView("emails/compte-blocked.mjml.twig", ["user" => $user]);
 
-        $this->mailer->send($email);
+            $this->mailer->send($email);
+        } catch (\Error $e) {  }
+
     }
 }
