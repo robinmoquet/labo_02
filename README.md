@@ -17,7 +17,17 @@ $ git clone https://github.com/robinmoquet/labo_02.git
 $ composer update
 ```
 
-3- Lancer le serveur :
+3- Installation des dépendances Javascript pour la compilation de MJML :
+
+``
+$ yarn install
+``
+ou avec npm
+``
+$ npm install
+``
+
+Finalement - Lancer le serveur :
 ```
 $ php bin/console server:run
 ```

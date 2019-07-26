@@ -39,7 +39,7 @@ class Email extends EmailMailer
      * @param array $context Les parametres passes a la vue
      * @return Email
      */
-    public function renderView(string $viewName, array $context): self
+    public function renderView(string $viewName, array $context = []): self
     {
         try {
             $this->html($this->mjmlRender->render(

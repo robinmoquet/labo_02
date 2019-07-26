@@ -15,19 +15,20 @@ class RegistrationType extends AbstractType
         $builder
             ->add('email', InputType::class, [
                 "label" => "Email :",
-                "placeholder" => "ex : jean-eude@email.com"
+                "placeholder" => "jean-eude@email.com"
             ])
             ->add('password', InputType::class, [
                 "type" => "password",
-                "label" => "Mot de passe :"
+                "label" => "Mot de passe :",
+                "placeholder" => "********"
             ])
             ->add('lastname', InputType::class, [
                 "label" => "Nom :",
-                "placeholder" => "ex : Du Champion"
+                "placeholder" => "Du Champion"
             ])
             ->add('firstname', InputType::class, [
                 "label" => "Prénom :",
-                "placeholder" => "ex : Jean Eude"
+                "placeholder" => "Jean Eude"
             ]);
     }
 

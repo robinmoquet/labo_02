@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\StatsUserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\RepositoryInterface\StatsUserRepository")
  */
 class StatsUser
 {
@@ -41,6 +41,22 @@ class StatsUser
      * @ORM\Column(type="integer", nullable=true)
      */
     private $nbUpdateProfile;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $blocked = false;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $attempt;
+
+    /**
+     * Le nombre de tentative de connection avant
+     * que le compte soit bloqué pendant un certain temps
+     */
+    const NB_ATTEMPT_AUTH = 5;
 
     public function getId(): ?int
     {
@@ -103,6 +119,30 @@ class StatsUser
     public function setNbUpdateProfile(?int $nbUpdateProfile): self
     {
         $this->nbUpdateProfile = $nbUpdateProfile;
+
+        return $this;
+    }
+
+    public function getBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(bool $blocked): self
+    {
+        $this->blocked = $blocked;
+
+        return $this;
+    }
+
+    public function getAttempt(): ?int
+    {
+        return $this->attempt;
+    }
+
+    public function setAttempt(?int $attempt): self
+    {
+        $this->attempt = $attempt;
 
         return $this;
     }
