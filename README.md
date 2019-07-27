@@ -27,6 +27,14 @@ ou avec npm
 $ npm install
 ``
 
+4- Mettre à jour les données du ".env" pour la connection a la base de donnée et le serveur smtp pour l'envoi d'email: 
+```
+DATABASE_URL=mysql://root:root@127.0.0.1:3306/labo_02
+
+GMAIL_USERNAME=<votre-adresse-gmail>@gmail.com
+GMAIL_PASSWORD=<votre-mot-de-passe>
+```
+
 Finalement - Lancer le serveur :
 ```
 $ php bin/console server:run

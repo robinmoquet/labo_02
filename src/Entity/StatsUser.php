@@ -63,6 +63,13 @@ class StatsUser
      */
     const NB_ATTEMPT_AUTH = 5;
 
+    /**
+     * Le temps durant lequel le compte sera bloqué,
+     * exprimé en minutes pour pouvoir etre utiliser dans
+     * un DateInterval ex (new DateIntervale("PT10M"))
+     */
+    const TIME_BLOCKED = "10";
+
     public function getId(): ?int
     {
         return $this->id;

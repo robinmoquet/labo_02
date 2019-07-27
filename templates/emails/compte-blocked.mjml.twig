@@ -9,7 +9,7 @@
             <mj-column>
                 <mj-text font-size="20px" align="center" color="white" font-family="helvetica">
                     Vos tentative de connection on echoué à cinq reprise, par conséquent pour vous protégez nous avons bloqué votre
-                    compte pendant 10 min.
+                    compte pendant {{ constant('TIME_BLOCKED', user.statsUser) }} min.
                 </mj-text>
                 <mj-text font-size="20px" align="center" color="white" font-family="helvetica">
                     Ceci est une email automatique envoyé par l'event dispatcher, après tous bloquage de compte

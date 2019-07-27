@@ -43,6 +43,8 @@ class SendEmailOnAuthentication implements EventSubscriberInterface
         $user = $event->getAuthenticationToken()->getUser();
 
         if($user instanceof User) {
+            if($user->getStatsUser()->getBlocked()) return;
+
             $email = $this->mailer->createEmail();
             try {
                 $email

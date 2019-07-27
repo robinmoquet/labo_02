@@ -95,6 +95,7 @@ class UpdateStatsOnAuthentication implements EventSubscriberInterface
             if(!$user instanceof User) return;
 
             $stats = $user->getStatsUser();
+            if($stats->getBlocked()) return;
 
             $attempt = $stats->getAttempt() ? ($stats->getAttempt() + 1) : 1;
             $stats->setAttempt($attempt);
