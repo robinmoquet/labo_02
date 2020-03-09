@@ -48,6 +48,7 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity="App\Entity\StatsUser", mappedBy="user", cascade={"persist", "remove"})
      */
     private $statsUser;
+
     /**
      * @var UserPasswordEncoderInterface
      */

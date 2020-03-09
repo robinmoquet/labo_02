@@ -7,13 +7,13 @@ namespace App\Repository\Doctrine;
 use App\Entity\StatsUser;
 use App\Repository\RepositoryInterface\StatsUserRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class DoctrineStatsUserRepository extends ServiceEntityRepository implements StatsUserRepository
 {
     private $manager;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, StatsUser::class);
         $this->manager = $registry->getManager();

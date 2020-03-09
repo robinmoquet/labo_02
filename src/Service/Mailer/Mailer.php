@@ -6,7 +6,7 @@ namespace App\Service\Mailer;
 use NotFloran\MjmlBundle\Renderer\BinaryRenderer;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\NamedAddress;
+use Symfony\Component\Mime\Address;
 use Twig\Environment;
 
 class Mailer
@@ -41,7 +41,7 @@ class Mailer
     public function createEmail (): Email
     {
         $email = (new Email($this->mjmlRender, $this->twig))
-            ->from(new NamedAddress('robin.moquet@gmail.com', 'Labo_02'));
+            ->from(new Address('robin.moquet@gmail.com', 'Labo_02'));
 
         return $email;
     }
